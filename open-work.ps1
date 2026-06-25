@@ -29,8 +29,23 @@ $RESTORE = 9
 # Получить окна Chrome
 function Get-ChromeWindows {
     $list = [System.Collections.ArrayList]::new()
-    $cb = { param($h, $p) if ([WinAPI]::IsWindowVisible($h)) { $id=0; [WinAPI]::GetWindowThreadProcessId($h, [ref]$id); if ((Get-Process -Id $id -EA 0).ProcessName -eq "chrome") { $list.Add($h) } }; return $true }
-    [WinAPI]::EnumWindows([WinAPI+EnumWindowsProc]{ $cb.Invoke($args[0], $args[1]) }, 0)
+    $callback = {
+        param($hWnd, $lParam)
+        if ([WinAPI]::IsWindowVisible($hWnd)) {
+            $procId = 0
+            [WinAPI]::GetWindowThreadProcessId($hWnd, [ref]$procId)
+            try {
+                $proc = Get-Process -Id $procId -ErrorAction SilentlyContinue
+                if ($proc -and $proc.ProcessName -eq "chrome") {
+                    $list.Add($hWnd) | Out-Null
+                }
+            } catch {
+                # Игнорируем ошибки
+            }
+        }
+        return $true
+    }
+    [WinAPI]::EnumWindows($callback, 0)
     $list
 }
 
@@ -38,7 +53,7 @@ function Get-ChromeWindows {
 function Move-Window {
     param($Titles, $X, $Y, $W, $H)
     if ($Titles -isnot [array]) { $Titles = @($Titles) }
-    
+
     foreach ($h in Get-ChromeWindows) {
         $sb = [System.Text.StringBuilder]::new(256)
         [WinAPI]::GetWindowText($h, $sb, 256)
