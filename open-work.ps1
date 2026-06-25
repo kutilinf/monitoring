@@ -60,10 +60,10 @@ function Move-Window {
         $title = $sb.ToString()
         foreach ($t in $Titles) {
             if ($title -match $t) {
-                [WinAPI]::ShowWindow($h, $RESTORE)
-                [WinAPI]::SetForegroundWindow($h)
-                Start-Sleep -Milliseconds 200
-                [WinAPI]::SetWindowPos($h, 0, $X, $Y, $W, $H, $SWP)
+                #[WinAPI]::ShowWindow($h, $RESTORE)
+                #[WinAPI]::SetForegroundWindow($h)
+                #Start-Sleep -Milliseconds 300
+                [WinAPI]::SetWindowPos($h, 0, $X, $Y, $W, 1035, $SWP)
                 return $true
             }
         }
@@ -82,18 +82,18 @@ Start-Process "$env:USERPROFILE\AppData\Roaming\Telegram Desktop\Telegram.exe"
 Start-Process "C:\Users\Фёдор\AppData\Local\element-desktop\Element.exe"
 
 # Запускаем отдельное окно хрома и в нем открываем необходимые вкладки
-Start-Process $Chrome -Arg "--new-window", "https://mail.360.yandex.ru/?uid=1130000067773169#folder/38", "https://messenger.360.yandex.ru/#/chats/0%2F0%2F6b067f62-6df7-40d5-b511-4986c6daa1ca"
+Start-Process $Chrome -Arg "--new-window", "https://mail.360.yandex.ru/?uid=1130000067773169#folder/40", "https://messenger.360.yandex.ru/#/chats/0%2F0%2F6b067f62-6df7-40d5-b511-4986c6daa1ca"
 Start-Sleep 1.5
-Start-Process $Chrome -Arg "--new-window", "http://confluence.im.loc/pages/viewpage.action?pageId=21338491", "https://mon.istelecom.msk.ru/d/S9lhRSjHz/istelecom-gw-2?orgId=1&refresh=30s&from=now-30m&to=now&timezone=Europe%2FMoscow"
+Start-Process $Chrome -Arg "--new-window", "http://confluence.im.loc/pages/viewpage.action?pageId=21338491", "https://mon.istelecom.msk.ru/d/S9lhRSjHz/istelecom-gw-2?orgId=1&refresh=30s&from=now-15m&to=now&timezone=Europe%2FMoscow"
 Start-Sleep 1.5
-Start-Process $Chrome -Arg "--new-window", "https://kgh.itsm.mos.ru/inbox?cv_id=14195&q=&vstate=assigned_to_my_team&vname=inbox&vlayout=table&order=-to_doable_created_at&column_keys=to_doable_created_at%2Cunread%2Cimpact_category%2Ctype%2Cpath%2Csubject%2Cstatus%2Cnext_target_at%2Cteam", "https://helpdesk.transport.mos.ru/sd/operator/#uuid:employee$39227806!{%22tab%22:%22b661b970-470d-404c-14f6-1144fae3f071,7b6f5ac2-3055-08c6-0ead-c672db076b3c%22}!encoded_prms=encoded_text$4025501", "https://grafana.evserver.intermb.ru/d/aes0ge5mqsflsb/support-overview?orgId=1&from=now-30m&to=now&timezone=Europe%2FMoscow&refresh=2m", "https://grafana.evserver.intermb.ru/d/nginx-vector-log-metrics/nginx-log-metrics?orgId=1&from=now-15m&to=now&timezone=Europe%2FMoscow&var-host=$__all&var-nginx_host=evaserver.ru&var-traffic=$__all&refresh=15s"
+Start-Process $Chrome -Arg "--new-window", "https://kgh.itsm.mos.ru/login", "https://helpdesk.transport.mos.ru/sd/operator/", "https://grafana.evserver.intermb.ru/d/aes0ge5mqsflsb/support-overview?orgId=1&from=now-30m&to=now&timezone=Europe%2FMoscow&refresh=2m", "https://grafana.evserver.intermb.ru/d/nginx-vector-log-metrics/nginx-log-metrics?orgId=1&from=now-15m&to=now&timezone=Europe%2FMoscow&var-host=$__all&var-nginx_host=evaserver.ru&var-traffic=$__all&refresh=15s"
 
 # Ждем 5 секунд пока вкладки прогрузятся
 Start-Sleep 5
 
 # Перемещение окон хром в нужное место
 # Окно определяется по надписи на первой закладке в окне, например: "Яндекс Почта" или "Confluence", если названия другие, то можно ниже вписать свои
-# Можно подправить расположение окна, пример: $leftX = X,  5 = Y, ($half + 10) = ширина окна,  $height = высота окна
-Move-Window @("Яндекс Почта", "Яндекс") $leftX 5 ($half + 10) 500
+# Можно подправить расположение окна, пример: $leftX = X,  5 = Y, ($half + 10) = ширина окна,  $height = высота окна тут почемуто не работает, нужно жестко задать (например 1035) для всехокон, в строке выше  <<[WinAPI]::SetWindowPos($h, 0, $X, $Y, $W, 1035, $SWP)>>
+Move-Window @("Яндекс Почта", "Яндекс") $leftX 5 ($half + 10) $height
 Move-Window @("Confluence", "Отдел Мониторинга") ($leftX + $half) 5 $half $height
 Move-Window @("Входящие", "Войти", "Helpdesk") ($rightX + 730) 5 ($half + 230) $height
