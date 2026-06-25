@@ -83,10 +83,10 @@ Start-Process "C:\Users\Фёдор\AppData\Local\element-desktop\Element.exe"
 
 # Запускаем отдельное окно хрома и в нем открываем необходимые вкладки
 Start-Process $Chrome -Arg "--new-window", "https://mail.360.yandex.ru/?uid=1130000067773169#folder/40", "https://messenger.360.yandex.ru/#/chats/0%2F0%2F6b067f62-6df7-40d5-b511-4986c6daa1ca"
-Start-Sleep 1.5
+Start-Sleep 2
 Start-Process $Chrome -Arg "--new-window", "http://confluence.im.loc/pages/viewpage.action?pageId=21338491", "https://mon.istelecom.msk.ru/d/S9lhRSjHz/istelecom-gw-2?orgId=1&refresh=30s&from=now-15m&to=now&timezone=Europe%2FMoscow"
-Start-Sleep 1.5
-Start-Process $Chrome -Arg "--new-window", "https://kgh.itsm.mos.ru/login", "https://helpdesk.transport.mos.ru/sd/operator/", "https://grafana.evserver.intermb.ru/d/aes0ge5mqsflsb/support-overview?orgId=1&from=now-30m&to=now&timezone=Europe%2FMoscow&refresh=2m", "https://grafana.evserver.intermb.ru/d/nginx-vector-log-metrics/nginx-log-metrics?orgId=1&from=now-15m&to=now&timezone=Europe%2FMoscow&var-host=$__all&var-nginx_host=evaserver.ru&var-traffic=$__all&refresh=15s"
+Start-Sleep 2
+Start-Process $Chrome -Arg "--new-window", "https://kgh.itsm.mos.ru/login", "https://helpdesk.transport.mos.ru/sd/operator/", "https://grafana.evserver.intermb.ru/d/aes0ge5mqsflsb/support-overview?orgId=1&from=now-15m&to=now&timezone=Europe%2FMoscow&refresh=2m", "https://grafana.evserver.intermb.ru/d/nginx-vector-log-metrics/nginx-log-metrics?orgId=1&from=now-15m&to=now&timezone=Europe%2FMoscow&var-host=`$__all&var-nginx_host=evaserver.ru&var-traffic=`$__all&refresh=1m"
 
 # Ждем 5 секунд пока вкладки прогрузятся
 Start-Sleep 5
