@@ -16,21 +16,19 @@
 
 ## 🚀 Что делает скрипт?
 
-- ✅ Закрывает старые окна Chrome
+- ✅ Закрывает старые окна Chrome (опционально можно включить - по умолчанию отключена)
 - ✅ Запускает:
     - Telegram
     - NGate (криптопровайдер)
     - OpenVPN Connect
     - Element (корпоративный мессенджер)
 - ✅ Открывает рабочие веб-интерфейсы:
-    - Яндекс Почта + Мессенджер
-    - Confluence
-    - Мониторинг ISTelecom
-    - ITSM / Helpdesk
-    - Grafana (Support Overview + Nginx Log Metrics)
+    - Яндекс Почта + Яндекс Мессенджер
+    - Confluence + Мониторинг "Транспортный шлюз"
+    - 4mi + Helpdesk + Grafana ЭЗС + Grafana Nginx
 - ✅ Автоматически **располагает окна** по мониторам:
-    - Левый монитор: Почта (слева) + Confluence/Мониторинг (справа)
-    - Правый монитор: Helpdesk/ITSM/Grafana
+    - Левый монитор: Яндекс Почта + Яндекс Мессенджер(слева) + Confluence + Мониторинг "Транспортный шлюз" (справа)
+    - Правый монитор: Telegram + Element (расположить как удобно) + 4mi + Helpdesk + Grafana ЭЗС + Grafana Nginx (справа)
 
 ---
 
@@ -69,9 +67,12 @@ Start-Process "$env:USERPROFILE\AppData\Roaming\Telegram Desktop\Telegram.exe"
 2. При необходимости измените высоту и ширину окон в конце скрипта:
 
 ```powershell
-$WindowHeight1 = 500   # для Почты
-$WindowHeight2 = 500   # для Confluence
-$WindowHeight3 = 500   # для Helpdesk
+Move-Window @("Яндекс Почта", "Яндекс") $leftX 5 ($half + 10) $height
+Move-Window @("Confluence", "Отдел Мониторинга") ($leftX + $half) 5 $half $height
+Move-Window @("Входящие", "Войти", "Helpdesk") ($rightX + 730) 5 ($half + 230) $height
+
+$height = высота окна тут почемуто не работает, нужно жестко задать (например 1035) для всех окон, 
+в строке выше  <<[WinAPI]::SetWindowPos($h, 0, $X, $Y, $W, 1035, $SWP)>>
 ```
 
 ---
@@ -81,7 +82,9 @@ $WindowHeight3 = 500   # для Helpdesk
 ### 1️⃣ Через PowerShell (классический)
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\open-work.ps1
+- Правой кнопкой нажать на файл "open-work.ps1" и выбрать "Выполнить с помощью PowerShell"
+
+- Выполнить команду "powershell -ExecutionPolicy Bypass -File .\open-work.ps1"
 ```
 
 ### 2️⃣ Через IntelliJ IDEA (External Tool)
@@ -131,18 +134,22 @@ pause
 
 ## 🐛 Если что-то пошло не так
 
-| Проблема | Решение |
-|----------|---------|
-| Ошибка `ExecutionPolicy` | Добавьте `-ExecutionPolicy Bypass` |
-| Окна не перемещаются | Проверьте заголовки окон в диагностике |
-| Высота окна не меняется | Убедитесь, что окно не максимизировано |
-| Приложение не найдено | Проверьте путь в скрипте |
-
+| Проблема                 | Решение                                |
+|--------------------------|----------------------------------------|
+| Ошибка `ExecutionPolicy` | Добавьте `-ExecutionPolicy Bypass`     |
+| Окна не перемещаются     | Проверьте заголовки окон в диагностике |
+| Высота окна не меняется  | Убедитесь, что окно не максимизировано |
+| Приложение не найдено    | Проверьте путь в скрипте               |
+| Страница не открывается  | Проверьте ссылки в скрипте             |
 ---
 
 ## 📦 Версионность
 
 Проект хранится в Git и GitHub:
+```powershell
+Версии можно скачать по ссылке: https://github.com/kutilinf/monitoring/tags
+
+```
 
 ```bash
 git clone https://github.com/kutilinf/monitoring.git
@@ -151,6 +158,8 @@ cd monitoring
 ```
 
 ---
+## 📌 О проекте
+Версия: v1.1.0
 
 ## 👤 Автор
 

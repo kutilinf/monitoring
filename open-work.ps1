@@ -72,8 +72,9 @@ function Move-Window {
 }
 
 # --- Запуск ---
-Stop-Process -Name chrome -Force -EA 0
-Start-Sleep 2
+# Если нужно, что бы сначала закрылись все окна хрома, а потом открылись только нужные для работы, то разкоментируйте две нижние строки
+#Stop-Process -Name chrome -Force -EA 0
+#Start-Sleep 2
 
 # Запускаем впн-ы, телеграмм, елемент
 Start-Process "C:\Program Files\Crypto Pro\NGate\ngateclient.exe"
