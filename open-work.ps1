@@ -60,9 +60,6 @@ function Move-Window {
         $title = $sb.ToString()
         foreach ($t in $Titles) {
             if ($title -match $t) {
-                #[WinAPI]::ShowWindow($h, $RESTORE)
-                #[WinAPI]::SetForegroundWindow($h)
-                #Start-Sleep -Milliseconds 300
                 [WinAPI]::SetWindowPos($h, 0, $X, $Y, $W, 1035, $SWP)
                 return $true
             }
@@ -98,3 +95,4 @@ Start-Sleep 5
 Move-Window @("Яндекс Почта", "Яндекс") $leftX 5 ($half + 10) $height
 Move-Window @("Confluence", "Отдел Мониторинга") ($leftX + $half) 5 $half $height
 Move-Window @("Входящие", "Войти", "Helpdesk") ($rightX + 730) 5 ($half + 230) $height
+exit
