@@ -8,6 +8,7 @@ $half = [Math]::Floor($screens[0].Bounds.Width / 2)
 $height = $screens[0].Bounds.Height - 40
 
 # WinAPI
+
 Add-Type @"
 using System;
 using System.Runtime.InteropServices;
